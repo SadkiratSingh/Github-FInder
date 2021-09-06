@@ -1,6 +1,8 @@
 import React from 'react'
 import UserItem from './UserItem';
 import Spinner from '../Layouts/Spinner';
+import PropTypes from 'prop-types'
+
 
 const Users = ({users= [], loading= false}) => {
     if(loading){
@@ -16,6 +18,12 @@ const Users = ({users= [], loading= false}) => {
         )
     }
 }
+
+Users.propTypes = {
+    users:PropTypes.array.isRequired,
+    loading:PropTypes.bool.isRequired,
+}
+
 const userContainer = {
     display:'flex',
     justifyContent:'space-evenly',
