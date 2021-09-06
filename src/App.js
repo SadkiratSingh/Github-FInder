@@ -4,6 +4,8 @@ import NavBar from "./Components/Layouts/Navbar";
 import Users from "./Components/users/Users";
 import Search from "./Components/users/Search";
 import Alert from "./Components/Layouts/Alert";
+import About from "./Components/pages/About";
+import User from "./Components/users/User";
 import axios from "axios";
 import "./App.css";
 
@@ -13,6 +15,7 @@ class App extends Component {
     // state always an object..
     this.state = {
       users: [],
+      user: {},
       loading: false,
       alert: null,
     };
@@ -34,6 +37,16 @@ class App extends Component {
     );
 
     this.setState({ users: res.data.items, loading: false });
+  };
+
+  getUserHandler = async (username) => {
+    this.setState({ loading: true });
+
+    let res = await axios.get(
+      `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    );
+
+    this.setState({ user: res.data, loading: false });
   };
 
   clearUsersHandler = () => {
@@ -81,6 +94,7 @@ class App extends Component {
                   );
                 }}
               />
+              <Route exact path="/about" component={About} />
             </Switch>
           </div>
         </div>
