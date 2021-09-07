@@ -74,10 +74,11 @@ class App extends Component {
             <Alert alert={this.state.alert} />
             {/* put all routes in a switch */}
             <Switch>
+              {/* index route */}
               <Route
                 exact
                 path="/"
-                render={(props) => {
+                render={() => {
                   return (
                     <Fragment>
                       <Search
@@ -94,7 +95,25 @@ class App extends Component {
                   );
                 }}
               />
+
+              {/* about route */}
               <Route exact path="/about" component={About} />
+
+              {/* user view route */}
+              <Route
+                exact
+                path="/user/:login"
+                render={(props) => {
+                  return (
+                    <User
+                      {...props}
+                      onGetUser={this.getUserHandler}
+                      user={this.state.user}
+                      loading={this.state.loading}
+                    />
+                  );
+                }}
+              />
             </Switch>
           </div>
         </div>
