@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const Repos = (props) => {
   return (
-    <div class="card">
+    <div className="card">
       {props.repos.map((repo) => {
         return <RepoItem key={repo.id} repo={repo} />;
       })}

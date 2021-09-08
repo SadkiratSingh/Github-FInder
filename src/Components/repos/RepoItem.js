@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const RepoItem = (props) => {
   return (
-    <div class="card">
+    <div className="card">
       <a href={props.repo.html_url}>{props.repo.name}</a>
     </div>
   );
