@@ -7,7 +7,6 @@ import Alert from "./Components/Layouts/Alert";
 import About from "./Components/pages/About";
 import User from "./Components/users/User";
 import GithubState from "./context/github/GithubState";
-import axios from "axios";
 import "./App.css";
 
 const App = () => {
