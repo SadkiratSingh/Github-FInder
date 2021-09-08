@@ -1,11 +1,8 @@
-import React from "react";
 import {
   SEARCH_USERS,
   GET_USER,
   GET_REPOS,
   SET_LOADING,
-  SET_ALERT,
-  REMOVE_ALERT,
   CLEAR_USERS,
 } from "../types";
 

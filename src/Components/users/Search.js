@@ -1,13 +1,12 @@
 import React, { useState, useContext, Fragment } from "react";
 import GithubContext from "../../context/github/GithubContext";
+import AlertContext from "../../context/alert/AlertContext";
 import PropTypes from "prop-types";
 
 const Search = (props) => {
   const [text, setText] = useState("");
   const { onSearchUsers, onClearUsers, users } = useContext(GithubContext);
-
-  const { setAlert } = props;
-
+  const { setAlert } = useContext(AlertContext);
   const onChangeHandler = (event) => {
     setText(event.target.value);
   };
