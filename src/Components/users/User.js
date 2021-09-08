@@ -1,12 +1,13 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, useContext, Fragment } from "react";
 import Spinner from "../Layouts/Spinner";
 import Repos from "../repos/Repos";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import GithubContext from "../../context/github/GithubContext";
 
 const User = (props) => {
-  const { loading, user, repos, onGetUser, match, onGetRepos } = props;
-
+  const { match } = props;
+  const { user, loading, onGetUser, onGetRepos, repos } =
+    useContext(GithubContext);
   // you are tried to be called every render but now you will be called once after initial render.
   useEffect(() => {
     onGetUser(match.params.login);
@@ -97,14 +98,6 @@ const User = (props) => {
       <Repos repos={repos} />
     </Fragment>
   );
-};
-
-User.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
-  onGetUser: PropTypes.func.isRequired,
-  onGetRepos: PropTypes.func.isRequired,
-  repos: PropTypes.array.isRequired,
 };
 
 export default User;

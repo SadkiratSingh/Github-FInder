@@ -11,37 +11,7 @@ import axios from "axios";
 import "./App.css";
 
 const App = () => {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
-  const [repos, setRepos] = useState([]);
-
-  const getUserHandler = async (username) => {
-    setLoading(true);
-
-    let res = await axios.get(
-      `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    );
-
-    setUser(res.data);
-    setLoading(false);
-  };
-
-  const getReposHandler = async (username) => {
-    setLoading(true);
-
-    let res = await axios.get(
-      `https://api.github.com/users/${username}/repos?per_page=10&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    );
-    setRepos(res.data);
-    setLoading(false);
-  };
-
-  const clearUsersHandler = () => {
-    setUsers([]);
-    setLoading(false);
-  };
 
   const setAlertHandler = (msg, type) => {
     setAlert({ msg, type });
@@ -66,12 +36,8 @@ const App = () => {
                 render={() => {
                   return (
                     <Fragment>
-                      <Search
-                        onClearUsers={clearUsersHandler}
-                        showClear={users.length > 0 ? true : false}
-                        setAlert={setAlertHandler}
-                      />
-                      <Users loading={loading} users={users} />
+                      <Search setAlert={setAlertHandler} />
+                      <Users />
                     </Fragment>
                   );
                 }}
@@ -81,22 +47,7 @@ const App = () => {
               <Route exact path="/about" component={About} />
 
               {/* user view route */}
-              <Route
-                exact
-                path="/user/:login"
-                render={(props) => {
-                  return (
-                    <User
-                      {...props}
-                      onGetUser={getUserHandler}
-                      onGetRepos={getReposHandler}
-                      user={user}
-                      loading={loading}
-                      repos={repos}
-                    />
-                  );
-                }}
-              />
+              <Route exact path="/user/:login" component={User} />
             </Switch>
           </div>
         </div>

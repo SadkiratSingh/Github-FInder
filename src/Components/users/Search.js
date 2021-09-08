@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 
 const Search = (props) => {
   const [text, setText] = useState("");
-  const { onSearchUsers } = useContext(GithubContext);
+  const { onSearchUsers, onClearUsers, users } = useContext(GithubContext);
 
-  const { setAlert, showClear, onClearUsers } = props;
+  const { setAlert } = props;
 
   const onChangeHandler = (event) => {
     setText(event.target.value);
@@ -37,7 +37,7 @@ const Search = (props) => {
           className="btn btn-dark btn-block"
         />
       </form>
-      {showClear && (
+      {users.length > 0 && (
         <button className="btn btn-light btn-block" onClick={onClearUsers}>
           Clear
         </button>
@@ -47,8 +47,6 @@ const Search = (props) => {
 };
 
 Search.propTypes = {
-  onClearUsers: PropTypes.func.isRequired,
-  showClear: PropTypes.bool.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 

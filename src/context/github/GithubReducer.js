@@ -6,6 +6,7 @@ import {
   SET_LOADING,
   SET_ALERT,
   REMOVE_ALERT,
+  CLEAR_USERS,
 } from "../types";
 
 // currState is the state which re-render happens
@@ -17,7 +18,25 @@ const GithubReducer = (currState, action) => {
     return {
       ...currState,
       users: payload,
-      loading: true,
+      loading: false,
+    };
+  } else if (type === CLEAR_USERS) {
+    return {
+      ...currState,
+      users: [],
+      loading: false,
+    };
+  } else if (type === GET_USER) {
+    return {
+      ...currState,
+      user: payload,
+      loading: false,
+    };
+  } else if (type === GET_REPOS) {
+    return {
+      ...currState,
+      repos: payload,
+      loading: false,
     };
   } else {
     return { ...currState };

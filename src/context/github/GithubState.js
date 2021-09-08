@@ -12,6 +12,7 @@ import {
   SET_LOADING,
   SET_ALERT,
   REMOVE_ALERT,
+  CLEAR_USERS,
 } from "../types";
 
 const GithubState = (props) => {
@@ -39,6 +40,32 @@ const GithubState = (props) => {
     dispatch({ type: SEARCH_USERS, payload: res.data.items });
   };
 
+  //lets clear users from state
+  const clearUsersHandler = () => {
+    dispatch({ type: CLEAR_USERS });
+  };
+
+  //lets get a single user now
+  const getUserHandler = async (username) => {
+    setLoading();
+
+    let res = await axios.get(
+      `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    );
+
+    dispatch({ type: GET_USER, payload: res.data });
+  };
+
+  //lets get all the repos now
+  const getReposHandler = async (username) => {
+    setLoading();
+
+    let res = await axios.get(
+      `https://api.github.com/users/${username}/repos?per_page=10&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    );
+    dispatch({ type: GET_REPOS, payload: res.data });
+  };
+
   // introduce a spinner to show loading.
   const setLoading = () => {
     dispatch({ type: SET_LOADING });
@@ -53,6 +80,9 @@ const GithubState = (props) => {
         alert: state.alert,
         repos: state.repos,
         onSearchUsers: searchUsersHandler,
+        onClearUsers: clearUsersHandler,
+        onGetUser: getUserHandler,
+        onGetRepos: getReposHandler,
       }}
     >
       {props.children}
