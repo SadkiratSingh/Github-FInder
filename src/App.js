@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavBar from "./Components/Layouts/Navbar";
-import Users from "./Components/users/Users";
-import Search from "./Components/users/Search";
+import Home from "./Components/pages/Home";
+import NoComponent from "./Components/pages/NoComponent";
 import Alert from "./Components/Layouts/Alert";
 import About from "./Components/pages/About";
 import User from "./Components/users/User";
@@ -22,24 +22,16 @@ const App = () => {
               {/* put all routes in a switch */}
               <Switch>
                 {/* index route */}
-                <Route
-                  exact
-                  path="/"
-                  render={() => {
-                    return (
-                      <Fragment>
-                        <Search />
-                        <Users />
-                      </Fragment>
-                    );
-                  }}
-                />
+                <Route exact path="/" component={Home} />
 
                 {/* about route */}
                 <Route exact path="/about" component={About} />
 
                 {/* user view route */}
                 <Route exact path="/user/:login" component={User} />
+
+                {/* any other route */}
+                <Route component={NoComponent} />
               </Switch>
             </div>
           </div>
