@@ -1,20 +1,25 @@
 import React, { Component, Fragment } from "react";
 import Spinner from "../Layouts/Spinner";
+import Repos from "../repos/Repos";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 class User extends Component {
   componentDidMount() {
     this.props.onGetUser(this.props.match.params.login);
+    this.props.onGetRepos(this.props.match.params.login);
   }
 
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
     onGetUser: PropTypes.func.isRequired,
+    onGetRepos: PropTypes.func.isRequired,
+    repos: PropTypes.array.isRequired,
   };
 
   render() {
+    const { loading, user, repos } = this.props;
     const {
       name,
       avatar_url,
@@ -28,9 +33,8 @@ class User extends Component {
       public_repos,
       hireable,
       company,
-    } = this.props.user;
+    } = user;
 
-    const { loading } = this.props;
     if (loading) {
       return <Spinner />;
     }
@@ -97,6 +101,7 @@ class User extends Component {
           <div className="badge badge-success">Following:{following}</div>
           <div className="badge badge-danger">Public Repos:{public_repos}</div>
         </div>
+        <Repos repos={repos} />
       </Fragment>
     );
   }
