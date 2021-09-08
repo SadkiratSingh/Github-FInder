@@ -1,10 +1,12 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useContext, Fragment } from "react";
+import GithubContext from "../../context/github/GithubContext";
 import PropTypes from "prop-types";
 
 const Search = (props) => {
   const [text, setText] = useState("");
+  const { onSearchUsers } = useContext(GithubContext);
 
-  const { setAlert, onSearchUsers, showClear, onClearUsers } = props;
+  const { setAlert, showClear, onClearUsers } = props;
 
   const onChangeHandler = (event) => {
     setText(event.target.value);
@@ -45,7 +47,6 @@ const Search = (props) => {
 };
 
 Search.propTypes = {
-  onSearchUsers: PropTypes.func.isRequired,
   onClearUsers: PropTypes.func.isRequired,
   showClear: PropTypes.bool.isRequired,
   setAlert: PropTypes.func.isRequired,

@@ -27,6 +27,23 @@ const GithubState = (props) => {
   const [state, dispatch] = useReducer(GithubReducer, initialState);
 
   // we have dispatch fxn with us. We will perform various tasks here to update state via githubReducer. This dispatch fxn will internally call githubReducer. We need to provide action to dispatch only.
+
+  //lets search for users after filling in form
+  const searchUsersHandler = async (text) => {
+    setLoading();
+
+    let res = await axios.get(
+      `https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+    );
+
+    dispatch({ type: SEARCH_USERS, payload: res.data.items });
+  };
+
+  // introduce a spinner to show loading.
+  const setLoading = () => {
+    dispatch({ type: SET_LOADING });
+  };
+
   return (
     <GithubContext.Provider
       value={{
@@ -35,6 +52,7 @@ const GithubState = (props) => {
         loading: state.loading,
         alert: state.alert,
         repos: state.repos,
+        onSearchUsers: searchUsersHandler,
       }}
     >
       {props.children}

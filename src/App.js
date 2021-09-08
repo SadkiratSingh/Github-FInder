@@ -17,26 +17,6 @@ const App = () => {
   const [alert, setAlert] = useState(null);
   const [repos, setRepos] = useState([]);
 
-  //runs only after the first time component is rendered to DOM
-  // async componentDidMount(){
-  //   this.setState({loading:true});
-
-  //   let res = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-
-  //   this.setState({users:res.data, loading:false});
-  // }
-
-  const searchUsersHandler = async (text) => {
-    setLoading(true);
-
-    let res = await axios.get(
-      `https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    );
-
-    setUsers(res.data.items);
-    setLoading(false);
-  };
-
   const getUserHandler = async (username) => {
     setLoading(true);
 
@@ -87,7 +67,6 @@ const App = () => {
                   return (
                     <Fragment>
                       <Search
-                        onSearchUsers={searchUsersHandler}
                         onClearUsers={clearUsersHandler}
                         showClear={users.length > 0 ? true : false}
                         setAlert={setAlertHandler}
